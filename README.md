@@ -9,6 +9,11 @@ Não utilizei variaveis de ambiente para facilitar recrutador na hora de executa
 
 Para executar a aplicação, você precisa iniciar o cliente e a API.
 
+## Versão
+
+Versão do node v18.19.1
+Versão npm 10.8.3
+
 ### Iniciando o Cliente
 
 Na raiz do projeto, execute os comandos abaixo:
