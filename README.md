@@ -11,8 +11,8 @@ Para executar a aplicação, você precisa iniciar o cliente e a API.
 
 ## Versão
 
-Versão do node v18.19.1
-Versão npm 10.8.3
+- **Node.js:** v18.19.1
+- **NPM:** v10.8.3
 
 ### Iniciando o Cliente
 
