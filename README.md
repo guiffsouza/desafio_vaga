@@ -39,22 +39,22 @@ A aplicação oferece as seguintes funcionalidades:
 
 #### Obter transações ordenadas por data em ordem crescente:
 
-Requisição: GET /transactions?sortBy=date&sortOrder=asc
+Requisição: `GET /transactions?sortBy=date&sortOrder=asc`
 
 #### Obter transações ordenadas por valor em ordem decrescente:
 
-Requisição: GET /transactions?sortBy=date&sortOrder=desc
+Requisição: `GET /transactions?sortBy=date&sortOrder=desc`
 
 #### Listar transações de forma paginada:
 
 Altere o valor page para alterar a pagina.
 Altere o valor limit para alterar o limite de transações por pagina.
 
-Requisição: GET /transactions?page=1&limit=100
+Requisição: `GET /transactions?page=1&limit=100`
 
 #### Realizar upload de um arquivo .txt:
 
-Requisição: POST /upload
+Requisição: `POST /upload`
 
 #### Filtragem de dados:
 
@@ -62,10 +62,10 @@ Altere nome para buscar outro cliente
 Altere startDate para trocar a data de início
 Altere endDate para trocar a data final
 
-Requisição: GET /transactions?nome=Beverly Shanahan&startDate=2024-09-01&endDate=2024-09-01
+Requisição: `GET /transactions?nome=Beverly Shanahan&startDate=2024-09-01&endDate=2024-09-01`
 
 #### Compilando as queries
 
 Você pode utilizar todos as queries no mesmo endpoint.
 
-Requisição: GET /transactions?page=1&limit=100&nome=Beverly Shanahan&startDate=2024-01-01&endDate=2024-11-01&sortBy=date&sortOrder=asc
+Requisição: `GET /transactions?page=1&limit=100&nome=Beverly Shanahan&startDate=2024-01-01&endDate=2024-11-01&sortBy=date&sortOrder=asc`
