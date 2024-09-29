@@ -10,46 +10,59 @@ export class TransactionService {
     const startTime = performance.now();
     const fileContent = fs.readFileSync(filePath, "utf8");
     const lines = fileContent.split("\n");
-
+  
     const clientMap = new Map();
-    let transactionsToSave = [];
-    let clientsToSave = [];
-
+    let transactionsToSave: ITransaction[] = [];
+    let clientsToSave: IClient[] = [];
+  
     for (const line of lines) {
       const transactionData = Services.parseLine(line);
       const { cpfCnpj, nome } = transactionData;
-
+  
       if (!cpfCnpj || !Services.isValidCpfCnpj(cpfCnpj)) {
         continue;
       }
 
-      if (!clientMap.has(cpfCnpj)) {
-        const client = new Client({ name: nome, cpfCnpj });
-        clientsToSave.push(client);
-        clientMap.set(cpfCnpj, client);
+      let client = clientMap.get(cpfCnpj);
+  
+      if (!client) {
+        client = await Client.findOne({ cpfCnpj });
+  
+        if (client) {
+          clientMap.set(cpfCnpj, client);
+        } else {
+          client = new Client({ name: nome, cpfCnpj });
+          clientsToSave.push(client);
+          clientMap.set(cpfCnpj, client);
+        }
       }
 
       const existingTransaction = await Transaction.findOne({
         transactionId: transactionData.id,
       });
-
-      if (!existingTransaction) {
-        const newTransaction = new Transaction({
-          clientId: clientMap.get(cpfCnpj)._id,
-          transactionId: transactionData.id,
-          date: new Date(transactionData.data),
-          value: transactionData.valor,
-        });
-        transactionsToSave.push(newTransaction);
+  
+      if (existingTransaction) {
+        continue;
       }
-
+  
+      const newTransaction = new Transaction({
+        clientId: client._id,
+        transactionId: transactionData.id,
+        date: new Date(transactionData.data),
+        value: transactionData.valor,
+      });
+      
+      transactionsToSave.push(newTransaction);
+  
       await TransactionService.batchInsert(clientsToSave, transactionsToSave, BATCH_SIZE);
     }
 
     await TransactionService.finalizeBatches(clientsToSave, transactionsToSave);
     const endTime = performance.now();
+    
     return { message: "Transações processadas com sucesso!", executionTime: `${endTime - startTime}ms` };
   }
+  
 
   static async batchInsert(clientsToSave: IClient[], transactionsToSave: ITransaction[], BATCH_SIZE: number) {
     if (clientsToSave.length >= BATCH_SIZE) {
