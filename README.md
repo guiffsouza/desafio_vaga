@@ -2,8 +2,7 @@
 
 ### Algumas Observações:
 
-Gostaria de informar que como o projeto deveria ser entregue em poucas horas. Dei um foco maior nas funcionalidades do que a design CSS. Tentei encontrar um equilibrio entre a leitura dos dados em tela e o salvamento das transações no banco de dados.
-Não utilizei variaveis de ambiente para facilitar recrutador na hora de executar o código.
+Em razão do pedido para que o projeto fosse entregue em poucas horas, priorizei as funcionalidades em vez do design CSS. Busquei um equilíbrio entre a busca rápida para a exibição dos dados na tela e a eficiência no salvamento das transações no banco de dados. Decidi não utilizar variáveis de ambiente para facilitar a execução do código pelo recrutador.
 
 ## Como Rodar a Aplicação
 
@@ -42,35 +41,12 @@ Acesse a API em `http://localhost:8000`.
 
 A aplicação oferece as seguintes funcionalidades:
 
-#### Obter transações ordenadas por data em ordem crescente:
+| Ação                                       | Requisição                                                                  | Descrição                                                                                       |
+|--------------------------------------------|----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| Obter transações ordenadas por data       | `GET /transactions?sortBy=date&sortOrder=asc`                            | Transações ordenadas por data em ordem crescente.                                             |
+| Obter transações ordenadas por valor      | `GET /transactions?sortBy=value&sortOrder=desc`                          | Transações ordenadas por valor em ordem decrescente.                                          |
+| Listar transações de forma paginada       | `GET /transactions?page=1&limit=100`                                     | Altere `page` para mudar a página e `limit` para ajustar o número de transações por página.   |
+| Realizar upload de um arquivo .txt        | `POST /upload`                                                            | A key do form-data deve ser chamada de `file`.                                                |
+| Filtragem de dados                         | `GET /transactions?nome=Beverly Shanahan&startDate=2024-09-01&endDate=2024-09-01` | Altere `nome` para buscar outro cliente, `startDate` para trocar a data de início, e `endDate` para trocar a data final. |
+| Compilando as queries                      | `GET /transactions?page=1&limit=100&nome=Beverly Shanahan&startDate=2024-01-01&endDate=2024-11-01&sortBy=date&sortOrder=asc` | Você pode utilizar todas as queries no mesmo endpoint.                                       |
 
-Requisição: `GET /transactions?sortBy=date&sortOrder=asc`
-
-#### Obter transações ordenadas por valor em ordem decrescente:
-
-Requisição: `GET /transactions?sortBy=date&sortOrder=desc`
-
-#### Listar transações de forma paginada:
-
-Altere o valor page para alterar a pagina.
-Altere o valor limit para alterar o limite de transações por pagina.
-
-Requisição: `GET /transactions?page=1&limit=100`
-
-#### Realizar upload de um arquivo .txt:
-
-Requisição: `POST /upload`
-
-#### Filtragem de dados:
-
-Altere nome para buscar outro cliente
-Altere startDate para trocar a data de início
-Altere endDate para trocar a data final
-
-Requisição: `GET /transactions?nome=Beverly Shanahan&startDate=2024-09-01&endDate=2024-09-01`
-
-#### Compilando as queries
-
-Você pode utilizar todos as queries no mesmo endpoint.
-
-Requisição: `GET /transactions?page=1&limit=100&nome=Beverly Shanahan&startDate=2024-01-01&endDate=2024-11-01&sortBy=date&sortOrder=asc`
