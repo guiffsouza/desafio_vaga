@@ -1,13 +1,25 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-interface IClient extends Document {
+export interface IClient extends Document {
   name: string;
   cpfCnpj: string;
 }
 
-const ClientSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  cpfCnpj: { type: String, required: true, unique: true },
-});
+class ClientModel {
+  private schema: Schema;
 
-export const Client = mongoose.model<IClient>("Client", ClientSchema);
+  constructor() {
+    this.schema = new Schema({
+      name: { type: String, required: true },
+      cpfCnpj: { type: String, required: true, unique: true },
+    });
+  }
+
+  public getModel() {
+    return mongoose.model<IClient>("Client", this.schema);
+  }
+}
+
+const clientModel = new ClientModel();
+
+export const Client = clientModel.getModel();

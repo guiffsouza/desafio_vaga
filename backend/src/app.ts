@@ -1,14 +1,24 @@
 import express from "express";
 import db from "./connection/db";
-import routes from "./routes/index";
+import AppRoutes from "./routes/index";
 
-db.on("error", console.log.bind(console, "Erro de conexão"));
-db.once("open", () => {
-  console.log("conexão com o banco feita com sucesso");
-});
+class App {
+  public app: express.Application;
 
-const app = express();
-app.use(express.json());
-routes(app);
+  constructor() {
+    this.app = express();
+    this.connectToDatabase();
+    new AppRoutes(this.app);
+  }
 
-export default app;
+  private connectToDatabase() {
+    db.on("error", console.log.bind(console, "Erro de conexão"));
+    db.once("open", () => {
+      console.log("Conexão com o banco feita com sucesso");
+    });
+  }
+}
+
+const appInstance = new App();
+
+export default appInstance.app;

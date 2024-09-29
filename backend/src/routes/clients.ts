@@ -1,8 +1,19 @@
 import express from "express";
 import ClientController from "../controllers/ClientControlle";
 
-const routes = express.Router();
+class ClientRoutes {
+  public router: express.Router;
 
-routes.get("/client", ClientController.get);
+  constructor() {
+    this.router = express.Router();
+    this.initializeRoutes();
+  }
 
-export default routes;
+  private initializeRoutes() {
+    this.router.get("/client", ClientController.get);
+  }
+}
+
+const clientRoutes = new ClientRoutes();
+
+export default clientRoutes.router;

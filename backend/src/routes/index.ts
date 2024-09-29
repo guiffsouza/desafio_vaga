@@ -3,16 +3,26 @@ import cors from "cors";
 import transactionsRoutes from "./transactions";
 import clientRoutes from "./clients";
 
-const routes = (app: Express) => {
-  app.use(
-    cors({
-      origin: "*",
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      allowedHeaders: "Content-Type,Authorization",
-    })
-  );
+class AppRoutes {
+  private app: Express;
 
-  app.use(express.json(), transactionsRoutes, clientRoutes);
-};
+  constructor(app: Express) {
+    this.app = app;
+    this.initializeRoutes();
+  }
 
-export default routes;
+  private initializeRoutes() {
+    this.app.use(express.json());
+    this.app.use(
+      cors({
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        allowedHeaders: "Content-Type,Authorization",
+      })
+    );
+
+    this.app.use(express.json(), transactionsRoutes, clientRoutes);
+  }
+}
+
+export default AppRoutes;

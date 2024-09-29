@@ -2,11 +2,23 @@ import express from "express";
 import TransactionController from "../controllers/TransactionController";
 import { upload } from "../middleware/upload";
 
-const routes = express.Router();
+class TransactionRoutes {
+  public router: express.Router;
 
-routes.get("/", TransactionController.home);
-routes.post("/upload", upload.single("file"), TransactionController.save);
-routes.get("/transactions", TransactionController.getTransactions);
-routes.delete("/delete", TransactionController.clearData);
+  constructor() {
+    this.router = express.Router();
+    this.initializeRoutes();
+  }
 
-export default routes;
+  private initializeRoutes() {
+    this.router
+      .get("/", TransactionController.home)
+      .post("/upload", upload.single("file"), TransactionController.save)
+      .get("/transactions", TransactionController.getTransactions)
+      .delete("/delete", TransactionController.clearData)
+  }
+}
+
+const transactionRoutes = new TransactionRoutes();
+
+export default transactionRoutes.router;
